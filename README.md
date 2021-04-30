@@ -20,4 +20,4 @@ from signver.localizer import Localizer
 detections = localizer.detect(input_tensor)
 ```
 
-![localizer](docs/images/localizer.jpg)
+![localizer](docs/images/localizer.png)
