@@ -16,4 +16,11 @@ class Localizer():
 
     def detect(self, input_tensor):
         detections = self.detect_fn(input_tensor)
-        return detections
+        num_detections = int(detections["num_detections"])
+        boxes = tf.reshape(detections["detection_boxes"], [
+                           num_detections, 4]).numpy().tolist()
+        scores = tf.reshape(detections["detection_scores"], [
+                            num_detections]).numpy().tolist()
+        classes = tf.reshape(detections["detection_classes"], [
+                             num_detections]).numpy().tolist()
+        return boxes, scores, classes, detections
