@@ -1,14 +1,23 @@
-# Deep Learning for Signature Verification
+# SignVer: A library for Automatic Signature Verification
 
-This repo contains results from experiments applying deep learning to signature verification.
+![signver logo - a library for automatic signature verification](docs/images/logo.png) 
+
+SignVer applies modern deep learning techniques to the task of signature verification - 
+given a pair (or pairs of) signatures, determine if they are produced by the same user (genuine signatures) or different users (potential forgeries). SignVer addresses this task by providing a set of modules that address subtasks required to implement signature verification in real world environments.
+
+![signver architecture](docs/images/engineeringpipeline.png)
 
 
-![architecture](docs/images/engineeringpipeline.png)
 
+## Signver Library Modules
 
+### Localizer
 
- ## Signver Library Modules
+Returns a list of bounding boxes where signatures are located in an image.
 
- ### Localizer
+```python
+from signver.localizer import Localizer
+detections = localizer.detect(input_tensor)
+```
 
- 
+![localizer](docs/images/localizer.jpg)
