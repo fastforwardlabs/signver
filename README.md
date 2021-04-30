@@ -7,4 +7,8 @@ This repo contains results from experiments applying deep learning to signature 
 
 
 
+ ## Signver Library Modules
+
+ ### Localizer
+
  
