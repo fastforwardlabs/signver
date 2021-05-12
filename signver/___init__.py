@@ -1,5 +1,5 @@
 from signver.version import VERSION as __version__
-from signver.localizer import Localizer
+from signver.detector import Detector
 
 
-__all__ = ["Localizer"]
+__all__ = ["Detector"]

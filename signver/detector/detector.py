@@ -2,7 +2,7 @@ import tensorflow as tf
 import time
 
 
-class Localizer():
+class Detector():
     def __init__(self, detect_threshold=0.5) -> None:
         self.model_load_time = None
         self.detect_fn = None
