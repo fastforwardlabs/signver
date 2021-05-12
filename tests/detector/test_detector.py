@@ -7,4 +7,4 @@ def test_localizer_load():
     detector.load(model_path)
 
     print(detector, detector.model_load_time)
-    assert detector.detect_fn is not None
+    assert detector.model is not None

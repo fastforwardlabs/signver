@@ -1,6 +1,6 @@
-from signver.extractor.extractor import Extractor
+from signver.extractor import BaseExtractor
 
 
-class PretrainedExtractor(Extractor):
+class PretrainedExtractor(BaseExtractor):
     def __init__(self):
         super().__init__()
