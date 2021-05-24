@@ -1,6 +1,6 @@
 from signver.extractor import BaseExtractor
 
 
-class SiameseExtractor(BaseExtractor):
+class MetricExtractor(BaseExtractor):
     def __init__(self):
-        super().__init__()
+        super().__init__(self)

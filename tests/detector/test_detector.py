@@ -2,7 +2,7 @@ from signver.detector import Detector
 
 
 def test_localizer_load():
-    model_path = "models/localizer/ssd640fpnlite/saved_model"
+    model_path = "models/detector/ssd640fpnlite/saved_model"
     detector = Detector()
     detector.load(model_path)
 

@@ -4,13 +4,16 @@ import tensorflow as tf
 
 class Matcher():
     def __init__(self):
-        self.extractor_type = ""
+        pass
 
-    def verify(query, query2) -> bool:
-        return True
+    def verify(query_1, query_2) -> bool:
+        pass
 
-    def match(query, ):
-        return True
+    def identify(query, index):
+        pass
 
-    def load(self, model_path: str):
-        self.detect_fn = tf.saved_model.load(model_path)
+    def load_index(self, model_path: str):
+        save
+
+    def save_index(self, save_path: str):
+        pass

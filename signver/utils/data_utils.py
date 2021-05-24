@@ -7,7 +7,7 @@ import io
 import numpy as np
 from six import BytesIO
 from PIL import Image
-
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -45,3 +45,14 @@ def img_to_np_array(img_path: str) -> None:
 
 def invert_img(img):
     return np.invert(img)
+
+
+def load_json_file(file_path):
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+        return data
+
+
+def save_json_file(file_path, data):
+    with open(file_path, 'w') as f:
+        json.dump(data, f)
