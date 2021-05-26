@@ -10,17 +10,39 @@ from PIL import Image, ImageDraw, ImageFont
 
 from signver.utils import data_utils
 
-viz_colors = {
-    "green": np.array([0, 255, 0], dtype=np.uint8),
-    "cyan": np.array([0, 255, 0], dtype=np.uint8)
-}
 
+def plot_np_array(np_img_array, plot_title: str="Image Plot", fig_size=(15, 20), nrows=1, ncols=4):
 
-def plot_np_array(np_img_array, plot_title: str="Image Plot", fig_size=(15, 20)):
-    plt.figure(figsize=fig_size)
-    plt.imshow(np_img_array, interpolation='nearest')
-    plt.title(plot_title)
+    if isinstance(np_img_array, list) and len(np_img_array) == 1:
+        np_img_array = np_img_array[0]
+
+    if isinstance(np_img_array, list):
+        if (nrows * ncols < len(np_img_array)):
+            nrows = int(len(np_img_array) / ncols)
+        fig, axs = plt.subplots(
+            nrows=nrows, ncols=ncols, figsize=(ncols*3, nrows*2))
+        for i, ax in enumerate(axs.flatten()):
+            if (i < len(np_img_array)):
+                ax.imshow(np_img_array[i])
+        fig.suptitle(plot_title)
+        fig.tight_layout()
+    else:
+        plt.figure(figsize=fig_size)
+        plt.imshow(np_img_array, interpolation='nearest')
+        plt.title(plot_title)
     plt.show()
+
+
+def get_image_crops(image_np_array, bounding_boxes, scores,  threshold=0.5):
+    im_height, im_width, _ = image_np_array.shape
+    crop_holder = []
+    for i in range(len(scores)):
+        if scores[i] > threshold:
+            bbox = bounding_boxes[i]
+            ymin, xmin, ymax, xmax = int(
+                bbox[0]*im_height), int(bbox[1]*im_width), int(bbox[2]*im_height), int(bbox[3]*im_width)
+            crop_holder.append(image_np_array[ymin:ymax, xmin:xmax])
+    return crop_holder
 
 
 def visualize_boxes(image_np_array, bounding_boxes, scores, threshold=0.5, color="green", thickness=1):
@@ -33,7 +55,7 @@ def visualize_boxes(image_np_array, bounding_boxes, scores, threshold=0.5, color
 
     for i in range(len(bounding_boxes)):
         if scores[i] > threshold:
-            bbox = bounding_boxes[0]
+            bbox = bounding_boxes[i]
             ymin, xmin, ymax, xmax = bbox[0], bbox[1], bbox[2], bbox[3]
             (left, right, top, bottom) = (xmin * im_width, xmax * im_width,
                                           ymin * im_height, ymax * im_height)
