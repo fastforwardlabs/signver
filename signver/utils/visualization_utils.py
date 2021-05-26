@@ -11,12 +11,13 @@ from PIL import Image, ImageDraw, ImageFont
 from signver.utils import data_utils
 
 
-def plot_np_array(np_img_array, plot_title: str="Image Plot", fig_size=(15, 20), nrows=1, ncols=4):
+def plot_np_array(np_img_array, title: str="Image Plot", fig_size=(15, 20), nrows=1, ncols=4):
 
     if isinstance(np_img_array, list) and len(np_img_array) == 1:
         np_img_array = np_img_array[0]
 
     if isinstance(np_img_array, list):
+        ncols = ncols if ncols < len(np_img_array) else len(np_img_array)
         if (nrows * ncols < len(np_img_array)):
             nrows = int(len(np_img_array) / ncols)
         fig, axs = plt.subplots(
@@ -24,12 +25,12 @@ def plot_np_array(np_img_array, plot_title: str="Image Plot", fig_size=(15, 20),
         for i, ax in enumerate(axs.flatten()):
             if (i < len(np_img_array)):
                 ax.imshow(np_img_array[i])
-        fig.suptitle(plot_title)
+        fig.suptitle(title)
         fig.tight_layout()
     else:
         plt.figure(figsize=fig_size)
         plt.imshow(np_img_array, interpolation='nearest')
-        plt.title(plot_title)
+        plt.title(title)
     plt.show()
 
 
