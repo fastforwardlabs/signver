@@ -9,7 +9,29 @@ from six import BytesIO
 from PIL import Image
 import json
 
+from tensorflow.keras.models import model_from_json
+from skimage.filters import threshold_otsu
+
 logger = logging.getLogger(__name__)
+
+
+def threshold_image(img_arr):
+    thresh = threshold_otsu(img_arr)
+    return np.where(img_arr > thresh, 255, 0)
+
+
+def resize_img(image_np, img_size=(224, 224)):
+    image_np = Image.fromarray(image_np)
+    return np.array(image_np.resize(img_size, Image.BILINEAR))
+
+
+def resnet_preprocess(image_np, resize_input=True, threshold_input=True):
+    if resize_input:
+        image_np = resize_img(image_np)
+    if threshold_input:
+        image_np = threshold_image(image_np)
+    image_np = tf.keras.applications.resnet.preprocess_input(image_np)
+    return image_np
 
 
 def mkdir(dir_path: str, exist_ok: bool=True) -> None:
@@ -35,16 +57,20 @@ def read_file(file_path: str):
     return tf.io.gfile.GFile(file_path, "rb").read()
 
 
-def img_to_np_array(img_path: str) -> None:
+def invert_img(img):
+    return np.invert(img)
+
+
+def img_to_np_array(img_path: str, invert_image=False) -> None:
     img = read_file(img_path)
     image = Image.open(BytesIO(img))
     (im_width, im_height) = image.size
-    return np.array(image.getdata()).reshape(
+    img_np = np.array(image.getdata()).reshape(
         (im_height, im_width, 3)).astype(np.uint8)
+    if invert_image:
+        img_np = invert_img(img_np)
 
-
-def invert_img(img):
-    return np.invert(img)
+    return img_np
 
 
 def load_json_file(file_path):
@@ -56,3 +82,10 @@ def load_json_file(file_path):
 def save_json_file(file_path, data):
     with open(file_path, 'w') as f:
         json.dump(data, f)
+
+
+def load_model_from_weights(model_dir):
+    model = model_from_json(load_json_file(
+        os.path.join(model_dir, "model_architecture.json")))
+    model.load_weights(os.path.join(model_dir, "model_weights.h5"))
+    return model
