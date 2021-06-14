@@ -5,7 +5,7 @@
 SignVer applies modern deep learning techniques in addressing the task of offline signature verification - 
 given a pair (or pairs of) signatures, determine if they are produced by the same user (genuine signatures) or different users (potential forgeries). SignVer addresses this task by providing a set of modules that address subtasks required to implement signature verification in real world environments.
 
-![signver architecture](docs/images/engineeringpipeline.png)
+![signver architecture](docs/images/pipeline.png)
 
 
 
