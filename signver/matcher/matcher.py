@@ -8,13 +8,13 @@ class Matcher():
     def __init__(self, index_dim=256):
         self.index = FaissIndex(index_dim)
 
-    def cosine_similarity(self, vector_1, vector_2):
+    def cosine_distance(self, vector_1, vector_2):
         return cosine(vector_1.flatten(), vector_2.flatten())
 
-    def verify(self, vector_1, vector_2, threshold=0.2) -> bool:
-        cosine_similarity = self.cosine_similarity(
+    def verify(self, vector_1, vector_2, threshold=0.18) -> bool:
+        distance = self.cosine_distance(
             vector_1.flatten(), vector_2.flatten())
-        return cosine_similarity < threshold
+        return distance < threshold
 
     def identify(query, index):
         pass
