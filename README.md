@@ -1,6 +1,6 @@
 # SignVer [Alpha]: A library for Automatic Offline Signature Verification
 
-> SignVer is under active development. It is released as part of experiments on deep learning for offline signature verification. Read [more here](https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html).
+> SignVer is an experimental library (not under active development) released as part of work on deep learning for offline signature verification. Read [more here](https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html).
 
 ![signver logo - a library for automatic signature verification](docs/images/logo.png) 
 
@@ -54,7 +54,3 @@ matcher.verify(feat1, feat2)    # False
 ```
  
 
-# TODO
-SignVer is under active development. 
-- [ ] Add documentation page 
-- [ ] Matching on vector indexes
