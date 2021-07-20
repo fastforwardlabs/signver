@@ -11,6 +11,15 @@ from PIL import Image, ImageDraw, ImageFont
 from signver.utils import data_utils
 
 
+def make_square(image_np_array, min_size=100, fill_color=(255, 255, 255, 0)):
+    im = Image.fromarray(np.uint8(image_np_array)).convert('RGB')
+    x, y = im.size
+    size = max(min_size, x, y)
+    new_im = Image.new('RGBA', (size, size), fill_color)
+    new_im.paste(im, (int((size - x) / 2), int((size - y) / 2)))
+    return np.array(new_im)
+
+
 def plot_np_array(np_img_array, title: str="Image Plot", fig_size=(15, 20), nrows=1, ncols=4):
 
     if isinstance(np_img_array, list) and len(np_img_array) == 1:
@@ -26,11 +35,12 @@ def plot_np_array(np_img_array, title: str="Image Plot", fig_size=(15, 20), nrow
             if (i < len(np_img_array)):
                 ax.imshow(np_img_array[i])
         fig.suptitle(title)
-        fig.tight_layout()
+        plt.tight_layout()
     else:
         plt.figure(figsize=fig_size)
         plt.imshow(np_img_array, interpolation='nearest')
         plt.title(title)
+
     plt.show()
 
 

@@ -25,14 +25,15 @@ def resize_img(image_np, img_size=(224, 224)):
     return np.array(image_np.resize(img_size, Image.BILINEAR))
 
 
-def resnet_preprocess(image_np, resize_input=True, threshold_input=True, invert_input=True):
+def resnet_preprocess(image_np, resize_input=True, threshold_input=True, invert_input=True, resnet=True):
     if invert_input:
         image_np = invert_img(image_np)
     if resize_input:
         image_np = resize_img(image_np)
     if threshold_input:
         image_np = threshold_image(image_np)
-    image_np = tf.keras.applications.resnet.preprocess_input(image_np)
+    if resnet:
+        image_np = tf.keras.applications.resnet.preprocess_input(image_np)
     return image_np
 
 
@@ -65,10 +66,10 @@ def invert_img(img):
 
 def img_to_np_array(img_path: str, invert_image=False) -> None:
     img = read_file(img_path)
-    image = Image.open(BytesIO(img))
-    (im_width, im_height) = image.size
-    img_np = np.array(image.getdata()).reshape(
-        (im_height, im_width, 3)).astype(np.uint8)
+    image = Image.open(BytesIO(img)).convert('RGB')
+    img_np = tf.keras.preprocessing.image.img_to_array(image).astype(np.uint8)
+    # np.array(image.getdata()).reshape(
+    #     (im_height, im_width, 3)).astype(np.uint8)
     if invert_image:
         img_np = invert_img(img_np)
 
