@@ -28,6 +28,20 @@ plot_np_array(annotated_image, plot_title="Document and Extracted Signatures")
 
 ![localizer](docs/images/localizer.png) 
 
+### Cleaner
+
+Returns a list of cleaned signature images (removal of background lines and text), given a list of signature images
+
+```python
+# Get image crops
+signatures = get_image_crops(img_tensor, boxes, scores,  threshold = 0.22 )
+cleaned_sigs = cleaner.clean(np.array(signatures))
+
+```
+
+![cleaner](docs/images/cleaned.jpg) 
+
+
 ### Extractor
 
 Returns a list of vector representations, given a list of image tensors/np arrays
@@ -40,6 +54,9 @@ extractor.load(extractor_model_path)
 
 features = extractor.extract(signature_list)
 ```
+
+
+
 
 ### Matcher
 
